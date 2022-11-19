@@ -1,17 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+const apiKey_Giphy = '7TyVN0qqjB1SmJ81y1iRb2qavAjXTY6s';
+const peticion = fetch(`https://api.giphy.com/v1/gifs/random?api_key=${apiKey_Giphy}`);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+peticion
+  .then( resp => resp.json() )
+  .then( ({ data }) => {
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+    const { url } = data.images.original;
+
+    const img = document.createElement( 'img' );
+    img.src = url;
+
+    document.body.append( img );
+
+  })
+  .catch( console.warn );
